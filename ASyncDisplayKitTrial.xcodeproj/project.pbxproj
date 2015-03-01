@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0208191AA30071000412A3 /* GoogleImagesDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0208181AA30071000412A3 /* GoogleImagesDatasource.m */; };
+		4A02081B1AA30169000412A3 /* GoogleImagesDatasourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A02081A1AA30169000412A3 /* GoogleImagesDatasourceTests.m */; };
+		4A02081E1AA30B75000412A3 /* GoogleImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A02081D1AA30B75000412A3 /* GoogleImageInfo.m */; };
 		4A021C611A9DB021005AAF6B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A021C601A9DB021005AAF6B /* main.m */; };
 		4A021C641A9DB021005AAF6B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A021C631A9DB021005AAF6B /* AppDelegate.m */; };
 		4A021C671A9DB021005AAF6B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A021C661A9DB021005AAF6B /* ViewController.m */; };
 		4A021C6A1A9DB021005AAF6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A021C681A9DB021005AAF6B /* Main.storyboard */; };
 		4A021C6C1A9DB021005AAF6B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A021C6B1A9DB021005AAF6B /* Images.xcassets */; };
 		4A021C6F1A9DB021005AAF6B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A021C6D1A9DB021005AAF6B /* LaunchScreen.xib */; };
-		4A021C7B1A9DB021005AAF6B /* ASyncDisplayKitTrialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A021C7A1A9DB021005AAF6B /* ASyncDisplayKitTrialTests.m */; };
 		4A3A3CD01A9DBBAE001158F7 /* JHLGoogleImageNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3A3CCF1A9DBBAE001158F7 /* JHLGoogleImageNode.m */; };
+		4ACB943C1AA3135A0087D9F2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ACB943B1AA3135A0087D9F2 /* libPods.a */; };
 		E943AF0EBEFF39D6B9B3B185 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD1C5E1C58688905B7F7A324 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +33,12 @@
 
 /* Begin PBXFileReference section */
 		2B5D0C9269DB906CA1208589 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		4A0208171AA30071000412A3 /* GoogleImagesDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleImagesDatasource.h; sourceTree = "<group>"; };
+		4A0208181AA30071000412A3 /* GoogleImagesDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleImagesDatasource.m; sourceTree = "<group>"; };
+		4A02081A1AA30169000412A3 /* GoogleImagesDatasourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleImagesDatasourceTests.m; sourceTree = "<group>"; };
+		4A02081C1AA30B75000412A3 /* GoogleImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleImageInfo.h; sourceTree = "<group>"; };
+		4A02081D1AA30B75000412A3 /* GoogleImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleImageInfo.m; sourceTree = "<group>"; };
+		4A02081F1AA310D1000412A3 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		4A021C5B1A9DB021005AAF6B /* ASyncDisplayKitTrial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASyncDisplayKitTrial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A021C5F1A9DB021005AAF6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A021C601A9DB021005AAF6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,11 +51,15 @@
 		4A021C6E1A9DB021005AAF6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4A021C741A9DB021005AAF6B /* ASyncDisplayKitTrialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ASyncDisplayKitTrialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A021C791A9DB021005AAF6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4A021C7A1A9DB021005AAF6B /* ASyncDisplayKitTrialTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ASyncDisplayKitTrialTests.m; sourceTree = "<group>"; };
 		4A3A3CCE1A9DBBAE001158F7 /* JHLGoogleImageNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHLGoogleImageNode.h; sourceTree = "<group>"; };
 		4A3A3CCF1A9DBBAE001158F7 /* JHLGoogleImageNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHLGoogleImageNode.m; sourceTree = "<group>"; };
+		4ACB943B1AA3135A0087D9F2 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		4DF64CF0D119E9C7A09249AB /* Pods-test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test.release.xcconfig"; path = "Pods/Target Support Files/Pods-test/Pods-test.release.xcconfig"; sourceTree = "<group>"; };
+		72AD7D4FC4EC5D60CE7AEA41 /* Pods-test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-test/Pods-test.debug.xcconfig"; sourceTree = "<group>"; };
+		A96B4FCB3A1AB02808C43BAB /* libPods-test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACEDB55A66866CAB971B1C3D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BD1C5E1C58688905B7F7A324 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEE87151C63DF2C7B94F3EBE /* libPods-ASyncDisplayKitTrial.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ASyncDisplayKitTrial.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ACB943C1AA3135A0087D9F2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +115,10 @@
 				4A021C5E1A9DB021005AAF6B /* Supporting Files */,
 				4A3A3CCE1A9DBBAE001158F7 /* JHLGoogleImageNode.h */,
 				4A3A3CCF1A9DBBAE001158F7 /* JHLGoogleImageNode.m */,
+				4A0208171AA30071000412A3 /* GoogleImagesDatasource.h */,
+				4A0208181AA30071000412A3 /* GoogleImagesDatasource.m */,
+				4A02081C1AA30B75000412A3 /* GoogleImageInfo.h */,
+				4A02081D1AA30B75000412A3 /* GoogleImageInfo.m */,
 			);
 			path = ASyncDisplayKitTrial;
 			sourceTree = "<group>";
@@ -117,7 +135,7 @@
 		4A021C771A9DB021005AAF6B /* ASyncDisplayKitTrialTests */ = {
 			isa = PBXGroup;
 			children = (
-				4A021C7A1A9DB021005AAF6B /* ASyncDisplayKitTrialTests.m */,
+				4A02081A1AA30169000412A3 /* GoogleImagesDatasourceTests.m */,
 				4A021C781A9DB021005AAF6B /* Supporting Files */,
 			);
 			path = ASyncDisplayKitTrialTests;
@@ -134,7 +152,11 @@
 		AC665703C92285A30AE99E54 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4ACB943B1AA3135A0087D9F2 /* libPods.a */,
+				4A02081F1AA310D1000412A3 /* libPods.a */,
 				BD1C5E1C58688905B7F7A324 /* libPods.a */,
+				FEE87151C63DF2C7B94F3EBE /* libPods-ASyncDisplayKitTrial.a */,
+				A96B4FCB3A1AB02808C43BAB /* libPods-test.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -144,6 +166,8 @@
 			children = (
 				2B5D0C9269DB906CA1208589 /* Pods.debug.xcconfig */,
 				ACEDB55A66866CAB971B1C3D /* Pods.release.xcconfig */,
+				72AD7D4FC4EC5D60CE7AEA41 /* Pods-test.debug.xcconfig */,
+				4DF64CF0D119E9C7A09249AB /* Pods-test.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -174,9 +198,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A021C811A9DB021005AAF6B /* Build configuration list for PBXNativeTarget "ASyncDisplayKitTrialTests" */;
 			buildPhases = (
+				7AE440F0AC87B2EEA038F5CD /* Check Pods Manifest.lock */,
 				4A021C701A9DB021005AAF6B /* Sources */,
 				4A021C711A9DB021005AAF6B /* Frameworks */,
 				4A021C721A9DB021005AAF6B /* Resources */,
+				17D0BEEA8D5BF7ADD7C58ED4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -246,6 +272,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		17D0BEEA8D5BF7ADD7C58ED4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7AE440F0AC87B2EEA038F5CD /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		A257D5F0D9E47352DDA0F4DF /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -284,6 +340,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A021C671A9DB021005AAF6B /* ViewController.m in Sources */,
+				4A0208191AA30071000412A3 /* GoogleImagesDatasource.m in Sources */,
+				4A02081E1AA30B75000412A3 /* GoogleImageInfo.m in Sources */,
 				4A021C641A9DB021005AAF6B /* AppDelegate.m in Sources */,
 				4A021C611A9DB021005AAF6B /* main.m in Sources */,
 				4A3A3CD01A9DBBAE001158F7 /* JHLGoogleImageNode.m in Sources */,
@@ -294,7 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A021C7B1A9DB021005AAF6B /* ASyncDisplayKitTrialTests.m in Sources */,
+				4A02081B1AA30169000412A3 /* GoogleImagesDatasourceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +486,7 @@
 		};
 		4A021C821A9DB021005AAF6B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2B5D0C9269DB906CA1208589 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -440,6 +499,10 @@
 				);
 				INFOPLIST_FILE = ASyncDisplayKitTrialTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ASyncDisplayKitTrial.app/ASyncDisplayKitTrial";
 			};
@@ -447,6 +510,7 @@
 		};
 		4A021C831A9DB021005AAF6B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACEDB55A66866CAB971B1C3D /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -455,6 +519,10 @@
 				);
 				INFOPLIST_FILE = ASyncDisplayKitTrialTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ASyncDisplayKitTrial.app/ASyncDisplayKitTrial";
 			};

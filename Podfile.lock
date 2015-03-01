@@ -2,21 +2,25 @@ PODS:
   - AsyncDisplayKit (1.1.1):
     - AsyncDisplayKit/ASDealloc2MainObject (= 1.1.1)
   - AsyncDisplayKit/ASDealloc2MainObject (1.1.1)
+  - Mantle (1.5.4):
+    - Mantle/extobjc (= 1.5.4)
+  - Mantle/extobjc (1.5.4)
 
 DEPENDENCIES:
-  - AsyncDisplayKit (from `https://github.com/facebook/AsyncDisplayKit.git`, branch `batch-api`)
+  - AsyncDisplayKit (from `https://github.com/facebook/AsyncDisplayKit.git`)
+  - Mantle
 
 EXTERNAL SOURCES:
   AsyncDisplayKit:
-    :branch: batch-api
     :git: https://github.com/facebook/AsyncDisplayKit.git
 
 CHECKOUT OPTIONS:
   AsyncDisplayKit:
-    :commit: 91301bcb7ef739635f6eae2880fdec3e5267c386
+    :commit: 3c822fe698737407e0591d5599e4ccfe2e407919
     :git: https://github.com/facebook/AsyncDisplayKit.git
 
 SPEC CHECKSUMS:
   AsyncDisplayKit: 2c355970d1aabe00608211d9a50e35b7a5dc0ae4
+  Mantle: d5fbaf30fbc58031223af13812c060e15934a1fe
 
 COCOAPODS: 0.36.0.rc.1

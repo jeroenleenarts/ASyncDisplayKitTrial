@@ -11,11 +11,13 @@
 #import <AsyncDisplayKit/AsyncDisplayKit.h>
 
 #import "JHLGoogleImageNode.h"
+#import "GoogleImagesDatasource.h"
+#import "GoogleImageInfo.h"
 
-@interface ViewController () <ASCollectionViewDataSource, ASCollectionViewDelegate>
+@interface ViewController () <ASCollectionViewDelegate>
 
 @property ASCollectionView *collectionView;
-@property NSUInteger numberOfImages;
+@property GoogleImagesDatasource *imagesDatasource;
 
 @end
 
@@ -27,16 +29,15 @@
         return nil;
     }
     
-#pragma mark change me to a higer value
-    _numberOfImages = 5;
-    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     layout.minimumInteritemSpacing = 0.0;
     layout.minimumLineSpacing = 0.0;
     
+    _imagesDatasource = [[GoogleImagesDatasource alloc]init];
+    
     _collectionView = [[ASCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    _collectionView.asyncDataSource = self;
+    _collectionView.asyncDataSource = _imagesDatasource;
     _collectionView.asyncDelegate = self;
     _collectionView.backgroundColor = [UIColor whiteColor];
     
@@ -47,52 +48,81 @@
     [super viewDidLoad];
 
     [self.view addSubview:self.collectionView];
+    
+    //I know this is not very pretty. But considering time constraints and the fact that we're programming against a deprecated API I am not too bothered by this.
+    [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+        if (error) {
+            [self.collectionView reloadData];
+            return;
+        }
+        [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+            if (error) {
+                [self.collectionView reloadData];
+                return;
+            }
+            [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+                if (error) {
+                    [self.collectionView reloadData];
+                    return;
+                }
+                [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+                    if (error) {
+                        [self.collectionView reloadData];
+                        return;
+                    }
+                    NSLog(@"Fetch finish");
+                    
+                    [self.collectionView reloadData];
+                }];
+            }];
+        }];
+    }];
 }
 
 - (void)viewWillLayoutSubviews {
     self.collectionView.frame = self.view.frame;
 }
 
-- (ASCellNode *)collectionView:(ASCollectionView *)collectionView nodeForItemAtIndexPath:(NSIndexPath *)indexPath {
-
-    JHLGoogleImageNode *imageNode = [[JHLGoogleImageNode alloc] initWithNetworkedImageURL:[NSURL URLWithString:@"http://dump.leenarts.net/avatar.png"]];
-    
-    return imageNode;
-}
-
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.numberOfImages;
-}
-
 - (void)collectionView:(ASCollectionView *)collectionView willBeginBatchFetchWithContext:(ASBatchContext *)context {
     NSLog(@"Fetch");
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    NSInteger currentNumberOfImages = self.imagesDatasource.numberOfImages;
+    void (^processResultsBlock)() = ^{
         NSLog(@"Fetch finish");
-        
-        NSUInteger batchSize = 50;
-        
         NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-        NSInteger currentNumberOfImages = self.numberOfImages;
-        self.numberOfImages += batchSize;
+        NSInteger newNumberOfImages = self.imagesDatasource.numberOfImages;
         
-        for (NSInteger i = 0; i < batchSize; i++) {
-            [indexPaths addObject:[NSIndexPath indexPathForRow:currentNumberOfImages + i inSection:0]];
+        for (NSInteger i = currentNumberOfImages; i < newNumberOfImages; i++) {
+            [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
         }
         
         [self.collectionView insertItemsAtIndexPaths:indexPaths];
-
+        
         [context completeBatchFetching:YES];
-    });
-}
+    };
 
-- (void)collectionViewLockDataSource:(ASCollectionView *)collectionView {
-    NSLog(@"Lock");
-}
-
-- (void)collectionViewUnlockDataSource:(ASCollectionView *)collectionView {
-    NSLog(@"Unlock");
+    //I know this is not very pretty. But considering time constraints and the fact that we're programming against a deprecated API I am not too bothered by this.
+    [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+        if (error) {
+            processResultsBlock();
+            return;
+        }
+        [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+            if (error) {
+                processResultsBlock();
+                return;
+            }
+            [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+                if (error) {
+                    processResultsBlock();
+                    return;
+                }
+                [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+                    processResultsBlock();
+                }];
+            }];
+        }];
+    }];
 }
 
 @end
