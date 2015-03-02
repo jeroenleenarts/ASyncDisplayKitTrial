@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <AsyncDisplayKit/AsyncDisplayKit.h>
 
+@class GoogleImageInfo;
+
 @interface GoogleImagesDatasource : NSObject <ASCollectionViewDataSource>
 
 @property (nonatomic, copy) NSString* searchString;
 @property (nonatomic, readonly) NSUInteger numberOfImages;
+
+-(GoogleImageInfo *)imageInfoForIndex:(NSUInteger)index;
 
 - (void)fetchBatchOnCompletion:(void(^)(NSError *error))completionBlock;
 

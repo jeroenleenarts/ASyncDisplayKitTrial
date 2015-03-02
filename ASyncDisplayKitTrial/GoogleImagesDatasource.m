@@ -17,6 +17,9 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
 @interface GoogleImagesDatasource ()
 
 @property (nonatomic, strong) NSMutableArray* images;
+@property (nonatomic, assign) BOOL locked;
+
+@property (nonatomic, strong) NSMutableArray* pendingChanges;
 
 @end
 
@@ -28,7 +31,8 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
     }
 
     _images = [NSMutableArray array];
-    _searchString = @"cocoaheadsnl";
+    _pendingChanges = [NSMutableArray array];
+//    _searchString = @"cocoaheadsnl";
     
     return self;
 }
@@ -39,12 +43,18 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
 
 - (void)fetchBatchOnCompletion:(void(^)(NSError *error))completionBlock {
     
+    //Sending an empty search string is an immediate 403 error.
+    if (self.searchString.length == 0) {
+        NSLog(@"Empty search");
+        completionBlock(nil);
+        return;
+    }
     NSMutableString *queryString = [NSMutableString string];
     [queryString appendString:BASE_URL];
     [queryString appendFormat:@"q=%@&", self.searchString];
     [queryString appendFormat:@"start=%lu", (unsigned long)self.images.count];
     
-    NSLog(@"queryString: %@", queryString);
+//    NSLog(@"queryString: %@", queryString);
     
     NSString *escapedString = [queryString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *queryUrl = [NSURL URLWithString:escapedString];
@@ -54,7 +64,6 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
             completionBlock(error);
             return;
         }
-        
         
         NSError *jsonError;
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
@@ -87,10 +96,19 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
 }
 
 - (void)setSearchString:(NSString *)searchString {
+    for (NSOperation *operation in self.pendingChanges) {
+        [operation start];
+    }
+
     _searchString = searchString;
     
     //reset datasource state, new search
     [self.images removeAllObjects];
+    [self.pendingChanges removeAllObjects];
+}
+
+-(GoogleImageInfo *)imageInfoForIndex:(NSUInteger)index {
+    return [self.images objectAtIndex:index];
 }
 
 - (ASCellNode *)collectionView:(ASCollectionView *)collectionView nodeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -107,10 +125,20 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
 
 - (void)collectionViewLockDataSource:(ASCollectionView *)collectionView {
     // I have not enabled async loading of data
+    NSLog(@"lock");
+    self.locked = YES;
 }
 
 - (void)collectionViewUnlockDataSource:(ASCollectionView *)collectionView {
     // I have not enabled async loading of data
+    NSLog(@"unlock");
+    self.locked = NO;
+    
+    for (NSOperation *operation in self.pendingChanges) {
+        [operation start];
+    }
+    
+    [self.pendingChanges removeAllObjects];
 }
 
 @end

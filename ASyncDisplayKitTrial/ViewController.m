@@ -13,11 +13,15 @@
 #import "JHLGoogleImageNode.h"
 #import "GoogleImagesDatasource.h"
 #import "GoogleImageInfo.h"
+#import "DetailViewController.h"
 
-@interface ViewController () <ASCollectionViewDelegate>
+@interface ViewController () <ASCollectionViewDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
+@property UISearchBar *searchBar;
 @property ASCollectionView *collectionView;
 @property GoogleImagesDatasource *imagesDatasource;
+@property UITableView *searchHistoryTable;
+@property NSArray *searchHistory;
 
 @end
 
@@ -28,6 +32,11 @@
     if (!(self = [super initWithCoder:aDecoder])) {
         return nil;
     }
+    
+    _searchBar = [[UISearchBar alloc]initWithFrame:CGRectZero];
+    _searchBar.delegate = self;
+    _searchBar.prompt = NSLocalizedString(@"Enter search term(s)", nil);
+    self.navigationItem.titleView = _searchBar;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -49,6 +58,13 @@
 
     [self.view addSubview:self.collectionView];
     
+    [self refreshData];
+
+}
+
+- (void)refreshData {
+    NSLog(@"Refresh");
+
     //I know this is not very pretty. But considering time constraints and the fact that we're programming against a deprecated API I am not too bothered by this.
     [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
         if (error) {
@@ -81,10 +97,77 @@
 
 - (void)viewWillLayoutSubviews {
     self.collectionView.frame = self.view.frame;
+
+    //Make sure the view fits.
+    CGFloat preferredSearchHistoryTableHeigh = MIN(self.searchHistoryTable.rowHeight * self.searchHistory.count, self.view.frame.size.height - self.topLayoutGuide.length);
+    self.searchHistoryTable.frame = CGRectMake(10.0, self.topLayoutGuide.length, self.searchBar.frame.size.width - 20.0, preferredSearchHistoryTableHeigh);
+}
+
+- (void)updateSearchText:(NSString *)searchText {
+    NSMutableArray *deletedIndexPaths = [NSMutableArray array];
+    for (NSUInteger i = 0; i < self.imagesDatasource.numberOfImages; i++) {
+        [deletedIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+    }
+    self.imagesDatasource.searchString = searchText;
+    
+    [self.collectionView deleteItemsAtIndexPaths:deletedIndexPaths];
+
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self updateSearchText:searchText];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    if (self.searchHistory.count > 0) {
+        self.searchHistoryTable = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+        self.searchHistoryTable.rowHeight = 44.0;
+        self.searchHistoryTable.layer.borderWidth = 0.5;
+        self.searchHistoryTable.delegate = self;
+        self.searchHistoryTable.dataSource = self;
+        self.searchHistoryTable.allowsSelection = YES;
+    }
+    
+    [self.view addSubview:self.searchHistoryTable];
+}
+
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    NSLog(@"end search edit");
+    [self.searchHistoryTable removeFromSuperview];
+    self.searchHistoryTable = nil;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    if (searchBar.text.length > 0) {
+        NSMutableArray *searchHistory = [self.searchHistory mutableCopy];
+        [searchHistory removeObject:searchBar.text];
+        [searchHistory insertObject:searchBar.text atIndex:0];
+        self.searchHistory = searchHistory;
+    }
+    [self refreshData];
+    [self.searchBar resignFirstResponder];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *searchText = [self.searchHistory objectAtIndex:indexPath.row];
+    self.searchBar.text = searchText;
+    [self updateSearchText:searchText];
+    [self refreshData];
+    [self.searchBar resignFirstResponder];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.searchHistory.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cell.textLabel.text = [self.searchHistory objectAtIndex:indexPath.row];
+    return cell;
 }
 
 - (void)collectionView:(ASCollectionView *)collectionView willBeginBatchFetchWithContext:(ASBatchContext *)context {
-    NSLog(@"Fetch");
+    NSLog(@"Fetch batch");
     
     NSInteger currentNumberOfImages = self.imagesDatasource.numberOfImages;
     void (^processResultsBlock)() = ^{
@@ -123,6 +206,31 @@
             }];
         }];
     }];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"detail" sender:[self.imagesDatasource imageInfoForIndex:indexPath.row]];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    DetailViewController *detailVC = (DetailViewController *)segue.destinationViewController;
+    detailVC.imageInfo = (GoogleImageInfo *)sender;
+}
+
+- (NSArray *)searchHistory {
+    NSArray *searchHistory = [[NSUserDefaults standardUserDefaults] arrayForKey:@"searchHistory"];
+    if (searchHistory == nil) {
+        searchHistory = [NSArray array];
+    }
+    return searchHistory;
+}
+
+- (void)setSearchHistory:(NSArray *)searchHistory {
+    if (searchHistory.count > 12) {
+        searchHistory = [searchHistory subarrayWithRange:NSMakeRange(0, 12)];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:searchHistory forKey:@"searchHistory"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
