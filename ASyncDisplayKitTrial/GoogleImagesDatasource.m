@@ -70,15 +70,15 @@ static NSString  * const ENDPOINT_FORMAT_STRING = @"https://ajax.googleapis.com/
             return;
         }
         
-        NSError *mtlError;
         NSArray *images = [jsonData valueForKeyPath:@"responseData.results"];
+        NSError *mtlError;
         NSArray* imagesInfo = [MTLJSONAdapter modelsOfClass:[GoogleImageInfo class] fromJSONArray:images error:&mtlError];
-        [self.images addObjectsFromArray:imagesInfo];
         
         if (mtlError) {
             completionBlock(mtlError);
             return;
         }
+        [self.images addObjectsFromArray:imagesInfo];
         
         completionBlock(nil);
     }];
