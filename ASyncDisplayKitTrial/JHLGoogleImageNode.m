@@ -9,6 +9,7 @@
 #import "JHLGoogleImageNode.h"
 
 static const CGFloat kCellInnerPadding = 5.0f;
+static const CGFloat kNumberOfColumns = 3.0f;
 
 @interface JHLGoogleImageNode ()
     
@@ -34,7 +35,7 @@ static const CGFloat kCellInnerPadding = 5.0f;
 
 - (CGSize)calculateSizeThatFits:(CGSize)constrainedSize
 {
-    CGFloat availableWidth = constrainedSize.width / 3.0;
+    CGFloat availableWidth = constrainedSize.width / kNumberOfColumns;
     
     return CGSizeMake(floorf(availableWidth),
                       floorf(availableWidth));
