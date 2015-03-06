@@ -10,6 +10,8 @@
 
 #import <AsyncDisplayKit/AsyncDisplayKit.h>
 
+#import "NSUserDefaults+JHLASync.h"
+
 #import "JHLGoogleImageNode.h"
 #import "GoogleImagesDatasource.h"
 #import "GoogleImageInfo.h"
@@ -23,7 +25,6 @@ static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
 @property ASCollectionView *collectionView;
 @property GoogleImagesDatasource *imagesDatasource;
 @property UITableView *searchHistoryTable;
-@property NSArray *searchHistory;
 
 @end
 
@@ -100,8 +101,10 @@ static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
 - (void)viewWillLayoutSubviews {
     self.collectionView.frame = self.view.frame;
 
+    NSArray *searchHistory = [NSUserDefaults standardUserDefaults].searchHistory;
+
     //Make sure the view fits.
-    CGFloat preferredSearchHistoryTableHeigh = MIN(self.searchHistoryTable.rowHeight * self.searchHistory.count, self.view.frame.size.height - self.topLayoutGuide.length);
+    CGFloat preferredSearchHistoryTableHeigh = MIN(self.searchHistoryTable.rowHeight * searchHistory.count, self.view.frame.size.height - self.topLayoutGuide.length);
     self.searchHistoryTable.frame = CGRectMake(10.0, self.topLayoutGuide.length, self.searchBar.frame.size.width - 20.0, preferredSearchHistoryTableHeigh);
 }
 
@@ -121,7 +124,9 @@ static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if (self.searchHistory.count > 0) {
+    NSArray *searchHistory = [NSUserDefaults standardUserDefaults].searchHistory;
+
+    if (searchHistory.count > 0) {
         self.searchHistoryTable = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
         self.searchHistoryTable.rowHeight = 44.0;
         self.searchHistoryTable.layer.borderWidth = 0.5;
@@ -141,17 +146,22 @@ static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     if (searchBar.text.length > 0) {
-        NSMutableArray *searchHistory = [self.searchHistory mutableCopy];
+        NSMutableArray *searchHistory = [[NSUserDefaults standardUserDefaults].searchHistory mutableCopy];
+
         [searchHistory removeObject:searchBar.text];
         [searchHistory insertObject:searchBar.text atIndex:0];
-        self.searchHistory = searchHistory;
+
+        [NSUserDefaults standardUserDefaults].searchHistory = searchHistory;
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     [self refreshData];
     [self.searchBar resignFirstResponder];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *searchText = [self.searchHistory objectAtIndex:indexPath.row];
+    NSArray *searchHistory = [NSUserDefaults standardUserDefaults].searchHistory;
+
+    NSString *searchText = [searchHistory objectAtIndex:indexPath.row];
     self.searchBar.text = searchText;
     [self updateSearchText:searchText];
     [self refreshData];
@@ -159,12 +169,16 @@ static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.searchHistory.count;
+    NSArray *searchHistory = [NSUserDefaults standardUserDefaults].searchHistory;
+
+    return searchHistory.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *searchHistory = [NSUserDefaults standardUserDefaults].searchHistory;
+
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.textLabel.text = [self.searchHistory objectAtIndex:indexPath.row];
+    cell.textLabel.text = [searchHistory objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -217,22 +231,6 @@ static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     DetailViewController *detailVC = (DetailViewController *)segue.destinationViewController;
     detailVC.imageInfo = (GoogleImageInfo *)sender;
-}
-
-- (NSArray *)searchHistory {
-    NSArray *searchHistory = [[NSUserDefaults standardUserDefaults] arrayForKey:@"searchHistory"];
-    if (searchHistory == nil) {
-        searchHistory = [NSArray array];
-    }
-    return searchHistory;
-}
-
-- (void)setSearchHistory:(NSArray *)searchHistory {
-    if (searchHistory.count > 12) {
-        searchHistory = [searchHistory subarrayWithRange:NSMakeRange(0, 12)];
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:searchHistory forKey:@"searchHistory"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

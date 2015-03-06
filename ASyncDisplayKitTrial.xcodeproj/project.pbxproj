@@ -17,6 +17,7 @@
 		4A021C6C1A9DB021005AAF6B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A021C6B1A9DB021005AAF6B /* Images.xcassets */; };
 		4A021C6F1A9DB021005AAF6B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A021C6D1A9DB021005AAF6B /* LaunchScreen.xib */; };
 		4A3A3CD01A9DBBAE001158F7 /* JHLGoogleImageNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3A3CCF1A9DBBAE001158F7 /* JHLGoogleImageNode.m */; };
+		4A3DEC771AAA2BA500954F2B /* NSUserDefaults+JHLASync.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEC761AAA2BA500954F2B /* NSUserDefaults+JHLASync.m */; };
 		4A65F33D1AA4B2460027CA6C /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A65F33C1AA4B2460027CA6C /* DetailViewController.m */; };
 		4ACB943C1AA3135A0087D9F2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ACB943B1AA3135A0087D9F2 /* libPods.a */; };
 		E943AF0EBEFF39D6B9B3B185 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD1C5E1C58688905B7F7A324 /* libPods.a */; };
@@ -54,6 +55,8 @@
 		4A021C791A9DB021005AAF6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A3A3CCE1A9DBBAE001158F7 /* JHLGoogleImageNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHLGoogleImageNode.h; sourceTree = "<group>"; };
 		4A3A3CCF1A9DBBAE001158F7 /* JHLGoogleImageNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHLGoogleImageNode.m; sourceTree = "<group>"; };
+		4A3DEC751AAA2BA500954F2B /* NSUserDefaults+JHLASync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+JHLASync.h"; sourceTree = "<group>"; };
+		4A3DEC761AAA2BA500954F2B /* NSUserDefaults+JHLASync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+JHLASync.m"; sourceTree = "<group>"; };
 		4A65F33B1AA4B2460027CA6C /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		4A65F33C1AA4B2460027CA6C /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		4ACB943B1AA3135A0087D9F2 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				4A02081D1AA30B75000412A3 /* GoogleImageInfo.m */,
 				4A65F33B1AA4B2460027CA6C /* DetailViewController.h */,
 				4A65F33C1AA4B2460027CA6C /* DetailViewController.m */,
+				4A3DEC751AAA2BA500954F2B /* NSUserDefaults+JHLASync.h */,
+				4A3DEC761AAA2BA500954F2B /* NSUserDefaults+JHLASync.m */,
 			);
 			path = ASyncDisplayKitTrial;
 			sourceTree = "<group>";
@@ -347,6 +352,7 @@
 				4A021C671A9DB021005AAF6B /* ViewController.m in Sources */,
 				4A0208191AA30071000412A3 /* GoogleImagesDatasource.m in Sources */,
 				4A02081E1AA30B75000412A3 /* GoogleImageInfo.m in Sources */,
+				4A3DEC771AAA2BA500954F2B /* NSUserDefaults+JHLASync.m in Sources */,
 				4A021C641A9DB021005AAF6B /* AppDelegate.m in Sources */,
 				4A021C611A9DB021005AAF6B /* main.m in Sources */,
 				4A3A3CD01A9DBBAE001158F7 /* JHLGoogleImageNode.m in Sources */,
