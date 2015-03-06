@@ -13,6 +13,8 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     self.infoLabel.text = NSLocalizedString(@"Loading detail image", nil);
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:[self.imageInfo.URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
