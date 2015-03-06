@@ -15,6 +15,8 @@
 #import "GoogleImageInfo.h"
 #import "DetailViewController.h"
 
+static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
+
 @interface ViewController () <ASCollectionViewDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property UISearchBar *searchBar;
@@ -209,7 +211,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"detail" sender:[self.imagesDatasource imageInfoForIndex:indexPath.row]];
+    [self performSegueWithIdentifier:DETAIL_SEGUE_IDENTIFIER sender:[self.imagesDatasource imageInfoForIndex:indexPath.row]];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
