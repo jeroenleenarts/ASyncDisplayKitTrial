@@ -17,9 +17,6 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
 @interface GoogleImagesDatasource ()
 
 @property (nonatomic, strong) NSMutableArray* images;
-@property (nonatomic, assign) BOOL locked;
-
-@property (nonatomic, strong) NSMutableArray* pendingChanges;
 
 @end
 
@@ -31,8 +28,6 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
     }
 
     _images = [NSMutableArray array];
-    _pendingChanges = [NSMutableArray array];
-//    _searchString = @"cocoaheadsnl";
     
     return self;
 }
@@ -96,15 +91,10 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
 }
 
 - (void)setSearchString:(NSString *)searchString {
-    for (NSOperation *operation in self.pendingChanges) {
-        [operation start];
-    }
-
     _searchString = searchString;
     
     //reset datasource state, new search
     [self.images removeAllObjects];
-    [self.pendingChanges removeAllObjects];
 }
 
 -(GoogleImageInfo *)imageInfoForIndex:(NSUInteger)index {
@@ -124,21 +114,11 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
 }
 
 - (void)collectionViewLockDataSource:(ASCollectionView *)collectionView {
-    // I have not enabled async loading of data
-    NSLog(@"lock");
-    self.locked = YES;
+    // I have not enabled async loading of data, but implementation is required
 }
 
 - (void)collectionViewUnlockDataSource:(ASCollectionView *)collectionView {
-    // I have not enabled async loading of data
-    NSLog(@"unlock");
-    self.locked = NO;
-    
-    for (NSOperation *operation in self.pendingChanges) {
-        [operation start];
-    }
-    
-    [self.pendingChanges removeAllObjects];
+    // I have not enabled async loading of data, but implementation is required
 }
 
 @end

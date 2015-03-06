@@ -30,12 +30,10 @@ static const CGFloat kCellInnerPadding = 5.0f;
     [self addSubnode:_imageNode];
     
     return self;
-
 }
 
 - (CGSize)calculateSizeThatFits:(CGSize)constrainedSize
 {
-    
     CGFloat availableWidth = constrainedSize.width / 3.0;
     
     return CGSizeMake(floorf(availableWidth),
