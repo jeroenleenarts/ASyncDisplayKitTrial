@@ -13,13 +13,13 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
              @"title": @"titleNoFormatting",
-             @"tbURL": @"tbUrl",
-             @"URL": @"url"
+             @"tbURLString": @"tbUrl",
+             @"URLString": @"url"
              };
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"title: %@ | tbUrl: %@", self.title, self.tbURL];
+    return [NSString stringWithFormat:@"title: %@ | tbUrl: %@", self.title, self.tbURLString];
 }
 
 

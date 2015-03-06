@@ -12,7 +12,7 @@
 
 @interface GoogleImageInfo : MTLModel <MTLJSONSerializing>
 @property (nonatomic, strong) NSString* title;
-@property (nonatomic, strong) NSString* tbURL;
-@property (nonatomic, strong) NSString* URL;
+@property (nonatomic, strong) NSString* tbURLString;
+@property (nonatomic, strong) NSString* URLString;
 
 @end

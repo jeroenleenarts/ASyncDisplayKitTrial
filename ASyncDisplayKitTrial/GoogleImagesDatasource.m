@@ -100,7 +100,7 @@ static NSString  * const ENDPOINT_FORMAT_STRING = @"https://ajax.googleapis.com/
 - (ASCellNode *)collectionView:(ASCollectionView *)collectionView nodeForItemAtIndexPath:(NSIndexPath *)indexPath {
     GoogleImageInfo *imageInfo = [self.images objectAtIndexedSubscript:indexPath.row];
     
-    JHLGoogleImageNode *imageNode = [[JHLGoogleImageNode alloc] initWithNetworkedImageURL:[NSURL URLWithString:imageInfo.tbURL]];
+    JHLGoogleImageNode *imageNode = [[JHLGoogleImageNode alloc] initWithNetworkedImageURL:[NSURL URLWithString:[imageInfo.tbURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     
     return imageNode;
 }
