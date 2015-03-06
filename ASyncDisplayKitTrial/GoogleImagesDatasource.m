@@ -12,7 +12,7 @@
 
 #import <MTLJSONAdapter.h>
 
-static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&";
+static NSString  * const ENDPOINT_FORMAT_STRING = @"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8&q=%@&start=%lu";
 
 @interface GoogleImagesDatasource ()
 
@@ -44,14 +44,10 @@ static NSString  * const BASE_URL = @"https://ajax.googleapis.com/ajax/services/
         completionBlock(nil);
         return;
     }
-    NSMutableString *queryString = [NSMutableString string];
-    [queryString appendString:BASE_URL];
-    [queryString appendFormat:@"q=%@&", self.searchString];
-    [queryString appendFormat:@"start=%lu", (unsigned long)self.images.count];
     
-//    NSLog(@"queryString: %@", queryString);
-    
+    NSString *queryString = [NSString stringWithFormat:ENDPOINT_FORMAT_STRING, self.searchString,(unsigned long)self.images.count];
     NSString *escapedString = [queryString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     NSURL *queryUrl = [NSURL URLWithString:escapedString];
     
     NSURLSessionDataTask* dataTask = [[NSURLSession sharedSession] dataTaskWithURL:queryUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
