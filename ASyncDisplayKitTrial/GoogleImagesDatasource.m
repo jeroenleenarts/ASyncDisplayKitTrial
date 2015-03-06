@@ -45,7 +45,7 @@ static NSString  * const ENDPOINT_FORMAT_STRING = @"https://ajax.googleapis.com/
         return;
     }
     
-    NSString *queryString = [NSString stringWithFormat:ENDPOINT_FORMAT_STRING, self.searchString,(unsigned long)self.images.count];
+    NSString *queryString = [NSString stringWithFormat:ENDPOINT_FORMAT_STRING, self.searchString,(unsigned long)self.numberOfImages];
     NSString *escapedString = [queryString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
     NSURL *queryUrl = [NSURL URLWithString:escapedString];
@@ -106,7 +106,7 @@ static NSString  * const ENDPOINT_FORMAT_STRING = @"https://ajax.googleapis.com/
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.images.count;
+    return self.numberOfImages;
 }
 
 - (void)collectionViewLockDataSource:(ASCollectionView *)collectionView {
