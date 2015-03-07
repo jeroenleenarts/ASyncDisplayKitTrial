@@ -52,21 +52,27 @@ static NSString  * const ENDPOINT_FORMAT_STRING = @"https://ajax.googleapis.com/
     
     NSURLSessionDataTask* dataTask = [[NSURLSession sharedSession] dataTaskWithURL:queryUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
-            completionBlock(error);
+            if (completionBlock != nil) {
+                completionBlock(error);
+            }
             return;
         }
         
         NSError *jsonError;
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
         if (jsonError) {
-            completionBlock(error);
+            if (completionBlock != nil) {
+                completionBlock(jsonError);
+            }
             return;
         }
         
         NSNumber *statusCode = [jsonData valueForKey:@"responseStatus"];
         if (statusCode.integerValue != 200) {
             NSError *error = [NSError errorWithDomain:@"This should be fixed" code:statusCode.integerValue userInfo:jsonData];
-            completionBlock(error);
+            if (completionBlock != nil) {
+                completionBlock(error);
+            }
             return;
         }
         
@@ -75,12 +81,16 @@ static NSString  * const ENDPOINT_FORMAT_STRING = @"https://ajax.googleapis.com/
         NSArray* imagesInfo = [MTLJSONAdapter modelsOfClass:[GoogleImageInfo class] fromJSONArray:images error:&mtlError];
         
         if (mtlError) {
-            completionBlock(mtlError);
+            if (completionBlock != nil) {
+                completionBlock(mtlError);
+            }
             return;
         }
         [self.images addObjectsFromArray:imagesInfo];
         
-        completionBlock(nil);
+        if (completionBlock != nil) {
+            completionBlock(nil);
+        }
     }];
     
     [dataTask resume];

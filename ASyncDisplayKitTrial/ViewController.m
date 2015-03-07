@@ -68,33 +68,14 @@ static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
 - (void)refreshData {
     NSLog(@"Refresh");
 
-    //I know this is not very pretty. But considering time constraints and the fact that we're programming against a deprecated API I am not too bothered by this.
     [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
         if (error) {
             [self.collectionView reloadData];
             return;
         }
-        [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
-            if (error) {
-                [self.collectionView reloadData];
-                return;
-            }
-            [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
-                if (error) {
-                    [self.collectionView reloadData];
-                    return;
-                }
-                [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
-                    if (error) {
-                        [self.collectionView reloadData];
-                        return;
-                    }
-                    NSLog(@"Fetch finish");
-                    
-                    [self.collectionView reloadData];
-                }];
-            }];
-        }];
+        NSLog(@"Fetch finish");
+        
+        [self.collectionView reloadData];
     }];
 }
 
@@ -182,46 +163,29 @@ static NSString * const DETAIL_SEGUE_IDENTIFIER = @"detail";
     return cell;
 }
 
-- (void)collectionView:(ASCollectionView *)collectionView willBeginBatchFetchWithContext:(ASBatchContext *)context {
-    NSLog(@"Fetch batch");
-    
-    NSInteger currentNumberOfImages = self.imagesDatasource.numberOfImages;
-    void (^processResultsBlock)() = ^{
-        NSLog(@"Fetch finish");
-        NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-        NSInteger newNumberOfImages = self.imagesDatasource.numberOfImages;
-        
-        for (NSInteger i = currentNumberOfImages; i < newNumberOfImages; i++) {
-            [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-        }
-        
-        [self.collectionView insertItemsAtIndexPaths:indexPaths];
-        
-        [context completeBatchFetching:YES];
-    };
-
-    //I know this is not very pretty. But considering time constraints and the fact that we're programming against a deprecated API I am not too bothered by this.
-    [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
-        if (error) {
-            processResultsBlock();
-            return;
-        }
-        [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
-            if (error) {
-                processResultsBlock();
-                return;
-            }
-            [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
-                if (error) {
-                    processResultsBlock();
-                    return;
+- (void)collectionView:(ASCollectionView *)collectionView willDisplayNodeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.imagesDatasource.numberOfImages -1) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Fetch batch");
+            
+            NSInteger currentNumberOfImages = self.imagesDatasource.numberOfImages;
+            void (^processResultsBlock)() = ^{
+                NSLog(@"Fetch finish");
+                NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+                NSInteger newNumberOfImages = self.imagesDatasource.numberOfImages;
+                
+                for (NSInteger i = currentNumberOfImages; i < newNumberOfImages; i++) {
+                    [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
                 }
-                [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
-                    processResultsBlock();
-                }];
+                
+                [self.collectionView insertItemsAtIndexPaths:indexPaths];
+            };
+            
+            [self.imagesDatasource fetchBatchOnCompletion:^(NSError *error) {
+                processResultsBlock();
             }];
-        }];
-    }];
+        });
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
